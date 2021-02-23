@@ -50,7 +50,8 @@ sed -i'' 's|#include "common.h"|#include <unistd.h>\n#include "common.h"|' ./xpw
 sed -i'' 's|#include <hfs/hfslib.h>|#include <hfs/hfslib.h>\n#ifdef WIN32\n#include <windows.h>\n#endif|' ./xpwn/dripwn/dripwn.c
 
 # libgeneral windows and general fixes
-sed -i'' 's|vasprintf(&_err, err, ap);|vsprintf(_err, err, ap);|' ./libgeneral/libgeneral/exception.cpp # <- unsure if this is the correct thing to do here
+# (allocate memory manually because windows does not support vasprintf)
+sed -i'' 's|vasprintf(&_err, err, ap);|_err=(char*)malloc(1024);vsprintf(_err, err, ap);|' ./libgeneral/libgeneral/exception.cpp
 sed -i'' 's|#   include CUSTOM_LOGGING|//#   include CUSTOM_LOGGING|' ./libgeneral/include/libgeneral/macros.h
 
 # img4tool windows fixes
@@ -77,7 +78,7 @@ sed -i'' 's|ret = DeviceIoControl(client->handle, 0x220195, data, length, data, 
 #sed -i'' 's|failed to find cmd: %s\",cmd|failed to find cmd\"|' ./liboffsetfinder64/include/liboffsetfinder64/OFexception.hpp
 
 cd ./xpwn
-cmake -DCMAKE_SYSTEM_NAME=MSYS -S ./ -B ./compile 
+cmake -DCMAKE_SYSTEM_NAME=MSYS -S ./ -B ./compile
 cd ./compile
 make LDFLAGS="$BEGIN_LDFLAGS"
 cp ./common/libcommon.a /mingw64/lib/libcommon.a
