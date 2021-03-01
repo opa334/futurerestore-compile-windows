@@ -41,7 +41,7 @@ git clone --recursive https://github.com/tihmstar/img4tool
 #git clone --recursive https://github.com/tihmstar/libinsn
 #git clone --recursive https://github.com/tihmstar/liboffsetfinder64
 #git clone --recursive https://github.com/tihmstar/libipatcher
-git clone --recursive https://github.com/opa334/futurerestore
+git clone --recursive https://github.com/marijuanARM/futurerestore
 
 # xpwn windows fixes
 sed -i'' 's|#include <unistd.h>||' ./xpwn/ipsw-patch/main.c
