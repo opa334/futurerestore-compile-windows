@@ -49,10 +49,9 @@ sed -i'' 's|char endianness;||' ./xpwn/ipsw-patch/main.c
 sed -i'' 's|#include "common.h"|#include <unistd.h>\n#include "common.h"|' ./xpwn/ipsw-patch/main.c
 sed -i'' 's|#include <hfs/hfslib.h>|#include <hfs/hfslib.h>\n#ifdef WIN32\n#include <windows.h>\n#endif|' ./xpwn/dripwn/dripwn.c
 
-# libgeneral windows and general fixes
+# libgeneral windows fix
 # (allocate memory manually because windows does not support vasprintf)
 sed -i'' 's|vasprintf(&_err, err, ap);|_err=(char*)malloc(1024);vsprintf(_err, err, ap);|' ./libgeneral/libgeneral/exception.cpp
-sed -i'' 's|#   include CUSTOM_LOGGING|//#   include CUSTOM_LOGGING|' ./libgeneral/include/libgeneral/macros.h
 
 # img4tool windows fixes
 sed -i'' 's|../include/img4tool/img4tool.hpp|#include "../include/img4tool/img4tool.hpp"|' ./img4tool/img4tool/img4tool.hpp
